@@ -1,16 +1,14 @@
 package contas
 
-import (
-	"orientacao_objetos/clientes"
-)
+import "orientacao_objetos/clientes"
 
-type ContaCorrente struct {
-	Titular                    clientes.Titular
-	NumeroAgencia, NumeroConta int
-	saldo                      float64
+type ContaPoupanca struct {
+	Titular                              clientes.Titular
+	NumeroAgencia, NumeroConta, Operacao int
+	saldo                                float64
 }
 
-func (c *ContaCorrente) Sacar(valorDoSaque float64) string {
+func (c *ContaPoupanca) Sacar(valorDoSaque float64) string {
 	podeSacar := valorDoSaque <= c.saldo && valorDoSaque > 0
 	if podeSacar {
 		c.saldo -= valorDoSaque
@@ -20,7 +18,7 @@ func (c *ContaCorrente) Sacar(valorDoSaque float64) string {
 	}
 }
 
-func (c *ContaCorrente) Depositar(valorDeposito float64) (string, float64) {
+func (c *ContaPoupanca) Depositar(valorDeposito float64) (string, float64) {
 	podeDepositar := valorDeposito > 0
 	if podeDepositar {
 		c.saldo += valorDeposito
@@ -30,7 +28,7 @@ func (c *ContaCorrente) Depositar(valorDeposito float64) (string, float64) {
 	}
 }
 
-func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *ContaCorrente) bool {
+func (c *ContaPoupanca) Transferir(valorTransferencia float64, contaDestino *ContaPoupanca) bool {
 	if c.saldo > valorTransferencia && valorTransferencia > 0 {
 		c.saldo -= valorTransferencia
 		contaDestino.Depositar(valorTransferencia)
@@ -40,6 +38,6 @@ func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *Con
 	}
 }
 
-func (c *ContaCorrente) MostraSaldo() float64 {
+func (c *ContaPoupanca) MostraSaldo() float64 {
 	return c.saldo
 }

@@ -8,17 +8,33 @@ import (
 
 func main() {
 
-	contaGabriel := contas.ContaCorrente{
-		Titular: clientes.Titular{
-			Nome:      "Gabriel",
-			Cpf:       "11122233344",
-			Profissao: "Desenvolvedor",
-		},
-		NumeroAgencia: 589,
-		NumeroConta:   111222,
-		Saldo:         100,
+	clienteGabriel := clientes.Titular{
+		Nome:      "Gabriel",
+		Cpf:       "11122233344",
+		Profissao: "Desenvolvedor",
 	}
 
+	contaGabriel := contas.ContaCorrente{
+		Titular:       clienteGabriel,
+		NumeroAgencia: 589,
+		NumeroConta:   111222,
+	}
+
+	contaGabriel.Depositar(100)
+
 	fmt.Println(contaGabriel)
+	fmt.Println(contaGabriel.MostraSaldo())
+
+	contaLuiz := contas.ContaPoupanca{}
+	contaChica := contas.ContaCorrente{}
+	contaLuiz.Depositar(500)
+	contaChica.Depositar(600)
+	fmt.Println(contaLuiz)
+	fmt.Println(contaChica)
+
+	contas.PagarBoleto(&contaGabriel, 60)
+	fmt.Println(contaGabriel.MostraSaldo())
+	contas.PagarBoleto(&contaChica, 30)
+	fmt.Println(contaChica.MostraSaldo())
 
 }
